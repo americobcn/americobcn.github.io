@@ -21,7 +21,7 @@ div h1 {
     color: white;
 }
 
-#clock_labels {    
+#clock_labels {
     font-size: large;
 }
 
@@ -30,6 +30,10 @@ div h1 {
 }
 
 @media (max-width: 480px) {
+    #clock_labels {
+        font-size: medium;
+    }
+
     #reloj {    
         font-size: 55px;
     }
