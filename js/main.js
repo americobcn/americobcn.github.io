@@ -7,7 +7,6 @@ function time_diff() {
     hours = (diff/1000/3600)%24;
     minutes = (diff/1000/60)%60;
     seconds = (diff/1000)%60;
-
     
     document.querySelector('#days').innerHTML = days.toString().match(/^-?\d+(?:\d{0,0})?/)[0];
     document.querySelector('#hours').innerHTML = hours.toString().match(/^-?\d+(?:\d{0,0})?/)[0];
