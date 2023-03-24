@@ -1,14 +1,13 @@
 @font-face {
     font-family: Bebas-Neue;
-    src: url(../media/fonts/BebasNeue-Regular.ttf);
+    src: url(../static/fonts/BebasNeue-Regular.ttf);
 }
-
 
 body {
     font-family: Bebas-Neue;
     background-color: rgb(0, 0, 0);
     color: rgb(255, 250, 243);
-    background-image: url('../media/sidra.jpeg');
+    background-image: url('../static/media/sidra.jpeg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
@@ -22,8 +21,7 @@ div h1 {
     color: white;
 }
 
-#clock_labels {
-    
+#clock_labels {    
     font-size: large;
 }
 
