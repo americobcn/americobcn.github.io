@@ -6,7 +6,6 @@ function time_diff() {
     const now = Date.now();
     if (now > cider_date) {
         clearInterval(interval_id);
-        console.log("Stoped called")
         update();
         return;
     }
@@ -27,22 +26,17 @@ function start_interval(interval) {
     interval_id = setInterval(time_diff, 1000);
 }
 
-
 document.addEventListener('DOMContentLoaded', () => {
     if (cider_date > Date.now()) {
-        start_interval(interval_id);
-        console.log("Start called");
+        start_interval(interval_id);        
     } else {
         update();
     }
 });
 
-
 function update() {
     let couter_element = document.getElementById('counter');
-    console.log('Start removing childs ..');
-    while (couter_element.firstChild) {
-        console.log('Removing childs ..');
+    while (couter_element.firstChild) {        
         couter_element.removeChild(couter_element.firstChild);
     }
 
