@@ -58,7 +58,7 @@ async function get_data() {
     const dia1 = document.getElementById('dia_1');
     const dia2 = document.getElementById('dia_2');
 
-    name.innerHTML = `<h1>${data[0].nombre}</h1>`
+    name.innerHTML = `<h1>El temps a ${data[0].nombre}</h1>`
     dia0.innerHTML = `<h5>${dia_0[2]} de ${dia_0[1]}</h5>
                     <div>min: ${data[0].prediccion.dia[0].temperatura.minima} &#8451</div>
                     <div>max: ${data[0].prediccion.dia[0].temperatura.maxima} &#8451</div><br>

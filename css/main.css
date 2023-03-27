@@ -40,12 +40,6 @@ div a {
     font-size: 180px;
 }
 
-#infoclima {
-    font-size: large;
-    color: rgb(255, 250, 243);
-}
-
-
 @media (max-width: 480px) {
     #clock_labels {
         font-size: medium;
