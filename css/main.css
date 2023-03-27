@@ -15,6 +15,7 @@ body {
 
 #reloj {    
     font-size: 120px;
+    color: whitesmoke;
 }
 
 div h1 {
@@ -23,10 +24,6 @@ div h1 {
 
 #clock_labels {
     font-size: large;
-}
-
-#reloj {    
-    color: whitesmoke;
 }
 
 div a {
@@ -42,6 +39,12 @@ div a {
     color: #e2d668;
     font-size: 180px;
 }
+
+#infoclima {
+    font-size: large;
+    color: rgb(255, 250, 243);
+}
+
 
 @media (max-width: 480px) {
     #clock_labels {
