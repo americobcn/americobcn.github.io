@@ -49,6 +49,11 @@ async function get_data() {
     const data = await fetch(info.datos).then(response => response.json());
     console.log(data[0]);
 
+    let dias = data[0].prediccion.dia;
+    dias.forEach(e => {
+        console.log(`${e.fecha} max: ${e.temperatura.maxima}   min: ${e.temperatura.minima}`);
+    });
+
     const dia_0 = new Date(data[0].prediccion.dia[0].fecha).toDateString().split(' ');
     const dia_1 = new Date(data[0].prediccion.dia[1].fecha).toDateString().split(' ');
     const dia_2 = new Date(data[0].prediccion.dia[2].fecha).toDateString().split(' ');
@@ -68,7 +73,7 @@ async function get_data() {
                     <div>18 a 24hs ${data[0].prediccion.dia[0].probPrecipitacion[6].value} %</div>
                     <div>${data[0].prediccion.dia[0].estadoCielo[0].descripcion}</div><br>`;
                     
-    dia1.innerHTML = `<h5>${dia_1[2]} de ${dia_1[1]}</h5>                    
+    dia1.innerHTML = `<h5>${dia_1[2]} de ${dia_1[1]}</h5>
                     <div>min: ${data[0].prediccion.dia[1].temperatura.minima} &#8451</div>
                     <div>max: ${data[0].prediccion.dia[1].temperatura.maxima} &#8451</div><br>                    
                     Pluja
