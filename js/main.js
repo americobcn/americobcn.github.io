@@ -1,31 +1,55 @@
-const cider_date = new Date("2023-04-02T14:00");
+/* Global variables */ 
 let interval_id;
 let re = new RegExp(/^-?\d+(?:\d{0,0})?/);
+const event_date = new Date("2023-04-23T00:00");
+
+
+/* Elements  */
+const daysDiv = document.querySelector('#days');
+const hoursDiv = document.querySelector('#hours');
+const minutesDiv = document.querySelector('#minutes');
+const secondsDiv = document.querySelector('#seconds');
+
+
+/* Start process */
+document.addEventListener('DOMContentLoaded', () => {
+    if (event_date > Date.now()) {
+        start_interval(interval_id);        
+    } else {
+        update();
+    }
+    get_data();
+});
+
+
+/* Start the interval and regier it */
+function start_interval(interval) {
+    interval_id = setInterval(time_diff, 1000);
+}
+
 
 function time_diff() {
     const now = Date.now();
-    if (now > cider_date) {
+    if (now > event_date) {
         clearInterval(interval_id);
         update();
         return;
     }
 
-    diff = cider_date - now;
+    diff = event_date - now;
     days = diff/1000/3600/24;
     hours = (diff/1000/3600)%24;
     minutes = (diff/1000/60)%60;
     seconds = (diff/1000)%60;
     
-    document.querySelector('#days').innerHTML = days.toString().match(re)[0];
-    document.querySelector('#hours').innerHTML = hours.toString().match(re)[0];
-    document.querySelector('#minutes').innerHTML = minutes.toString().match(re)[0];
-    document.querySelector('#seconds').innerHTML = seconds.toString().match(re)[0];
+    daysDiv.innerHTML = days.toString().match(re)[0];
+    hoursDiv.innerHTML = hours.toString().match(re)[0];
+    minutesDiv.innerHTML = minutes.toString().match(re)[0];
+    secondsDiv.innerHTML = seconds.toString().match(re)[0];
 }
 
-function start_interval(interval) {
-    interval_id = setInterval(time_diff, 1000);
-}
 
+/** Count down ended */
 function update() {
     let couter_element = document.getElementById('counter');
     while (couter_element.firstChild) {        
@@ -40,8 +64,9 @@ function update() {
     couter_element.appendChild(txotx);
 }
 
+
 /* Clima Information */
-const url = 'https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/20001/?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbWVyaWNvLmNvdEBnbWFpbC5jb20iLCJqdGkiOiJmOWEwMGY3MC0yZTQ5LTQwNmYtYjViOC00MDkzNTY1NzdjNzQiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY3OTg1ODMyOCwidXNlcklkIjoiZjlhMDBmNzAtMmU0OS00MDZmLWI1YjgtNDA5MzU2NTc3Yzc0Iiwicm9sZSI6IiJ9.4it22Cc2Iu-yBCKp8rjIeVhGZ6Kmr1NZW4W3Y_adoFs';
+const url = 'https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/08019/?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbWVyaWNvLmNvdEBnbWFpbC5jb20iLCJqdGkiOiJmOWEwMGY3MC0yZTQ5LTQwNmYtYjViOC00MDkzNTY1NzdjNzQiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY3OTg1ODMyOCwidXNlcklkIjoiZjlhMDBmNzAtMmU0OS00MDZmLWI1YjgtNDA5MzU2NTc3Yzc0Iiwicm9sZSI6IiJ9.4it22Cc2Iu-yBCKp8rjIeVhGZ6Kmr1NZW4W3Y_adoFs';
 
 async function get_data() {
     const info = await fetch(url).then(response => response.json());
@@ -74,15 +99,3 @@ async function get_data() {
 
     }
 }
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    if (cider_date > Date.now()) {
-        start_interval(interval_id);        
-    } else {
-        update();
-    }
-
-    get_data();
-
-});
