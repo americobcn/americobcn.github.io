@@ -45,51 +45,34 @@ const url = 'https://opendata.aemet.es/opendata/api/prediccion/especifica/munici
 
 async function get_data() {
     const info = await fetch(url).then(response => response.json());
-    console.log(info);
-    const data = await fetch(info.datos).then(response => response.json());
-    console.log(data[0]);
+    const resp = await fetch(info.datos).then(response => response.json());
+    const predictions = resp[0].prediccion.dia;
+    const data = resp[0];
 
-    let dias = data[0].prediccion.dia;
-    dias.forEach(e => {
-        console.log(`${e.fecha} max: ${e.temperatura.maxima}   min: ${e.temperatura.minima}`);
-    });
+    const body = document.getElementById('name');
+    body.innerHTML = `<h1>${data.nombre}</h1>`
 
-    const dia_0 = new Date(data[0].prediccion.dia[0].fecha).toDateString().split(' ');
-    const dia_1 = new Date(data[0].prediccion.dia[1].fecha).toDateString().split(' ');
-    const dia_2 = new Date(data[0].prediccion.dia[2].fecha).toDateString().split(' ');
-
+    let dates = []
+    for (let i = 0; i < 3; i++) {
+        dates.push(new Date(predictions[i].fecha));
+        console.log(dates[i]);
+    }
+    
     const name = document.getElementById('name');
-    const dia0 = document.getElementById('dia_0');
-    const dia1 = document.getElementById('dia_1');
-    const dia2 = document.getElementById('dia_2');
+    name.innerHTML = `<h1>El temps a ${data.nombre}</h1>`
 
-    name.innerHTML = `<h1>El temps a ${data[0].nombre}</h1>`
-    dia0.innerHTML = `<h5>${dia_0[2]} de ${dia_0[1]}</h5>
-                    <div>min: ${data[0].prediccion.dia[0].temperatura.minima} &#8451</div>
-                    <div>max: ${data[0].prediccion.dia[0].temperatura.maxima} &#8451</div><br>
-                    Pluja
-                    <div>06 a 12hs ${data[0].prediccion.dia[0].probPrecipitacion[4].value} %</div>
-                    <div>12 a 18hs ${data[0].prediccion.dia[0].probPrecipitacion[5].value} %</div>
-                    <div>18 a 24hs ${data[0].prediccion.dia[0].probPrecipitacion[6].value} %</div>
-                    <div>${data[0].prediccion.dia[0].estadoCielo[0].descripcion}</div><br>`;
-                    
-    dia1.innerHTML = `<h5>${dia_1[2]} de ${dia_1[1]}</h5>
-                    <div>min: ${data[0].prediccion.dia[1].temperatura.minima} &#8451</div>
-                    <div>max: ${data[0].prediccion.dia[1].temperatura.maxima} &#8451</div><br>                    
-                    Pluja
-                    <div>06 a 12hs ${data[0].prediccion.dia[1].probPrecipitacion[4].value} %</div>
-                    <div>12 a 18hs ${data[0].prediccion.dia[1].probPrecipitacion[5].value} %</div>
-                    <div>18 a 24hs ${data[0].prediccion.dia[1].probPrecipitacion[6].value} %</div>
-                    <div>${data[0].prediccion.dia[1].estadoCielo[0].descripcion}</div><br>`;
+    let dias = document.getElementsByClassName('col-4 text-center');
 
-    dia2.innerHTML = `<h5>${dia_2[2]} de ${dia_2[1]}</h5>                                        
-                    <div>min: ${data[0].prediccion.dia[2].temperatura.minima} &#8451</div>
-                    <div>max: ${data[0].prediccion.dia[2].temperatura.maxima} &#8451</div><br>
-                    Pluja
-                    <div>00 a 24hs ${data[0].prediccion.dia[2].probPrecipitacion[0].value} %</div>
-                    <div>00 a 12hs ${data[0].prediccion.dia[2].probPrecipitacion[1].value} %</div>
-                    <div>12 a 24hs ${data[0].prediccion.dia[2].probPrecipitacion[2].value} %</div>
-                    <div>${data[0].prediccion.dia[2].estadoCielo[0].descripcion}</div>`;
+    for (let i = 0; i < 3; i++) {
+        console.log(predictions[i]);
+        dias[i].innerHTML = `<h5>${dates[i].toLocaleString('default', {day:'numeric', month:'short'})}</h5>
+                                <div>Min:   ${predictions[i].temperatura.minima} &#8451</div>
+                                <div>Max:   ${predictions[i].temperatura.maxima} &#8451</div><br>
+                                <div>00 a 12hs  ${predictions[i].probPrecipitacion[1].value} %</div>
+                                <div>12 a 24hs  ${predictions[i].probPrecipitacion[2].value} %</div><br>
+                                <div> ${predictions[i].estadoCielo[0].descripcion}</div>`;
+
+    }
 }
 
 
