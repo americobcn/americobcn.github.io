@@ -1,7 +1,7 @@
 /* Global variables */ 
 let interval_id;
 let re = new RegExp(/^-?\d+(?:\d{0,0})?/);
-const event_date = new Date("2023-04-23T00:00");
+const event_date = new Date("2023-06-24T00:00");
 
 
 /* Elements  */
