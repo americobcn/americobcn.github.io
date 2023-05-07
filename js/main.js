@@ -59,7 +59,7 @@ function update() {
     couter_element.classList.add('txotx');
     couter_element.classList.add('flip-scale-up-hor');
     const txotx = document.createElement('div');
-    const text_node = document.createTextNode('Txotx!');
+    const text_node = document.createTextNode('Bon Sant Joan!');
     txotx.appendChild(text_node);
     couter_element.appendChild(txotx);
 }
