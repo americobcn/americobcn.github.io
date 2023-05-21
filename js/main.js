@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-/* Start the interval and regier it */
+/* Start the interval and register it */
 function start_interval(interval) {
     interval_id = setInterval(time_diff, 1000);
 }
@@ -56,12 +56,12 @@ function update() {
         couter_element.removeChild(couter_element.firstChild);
     }
 
-    couter_element.classList.add('txotx');
+    couter_element.classList.add('congrats');
     couter_element.classList.add('flip-scale-up-hor');
-    const txotx = document.createElement('div');
+    const congrats = document.createElement('div');
     const text_node = document.createTextNode('Bon Sant Joan!');
     txotx.appendChild(text_node);
-    couter_element.appendChild(txotx);
+    couter_element.appendChild(congrats);
 }
 
 
@@ -99,3 +99,4 @@ async function get_data() {
 
     }
 }
+
