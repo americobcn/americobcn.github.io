@@ -1,7 +1,9 @@
 /* Global variables */ 
 let interval_id;
 let re = new RegExp(/^-?\d+(?:\d{0,0})?/);
-const event_date = new Date("2025-06-24T00:00");
+const d = new Date();
+let year = d.getFullYear();
+const event_date = new Date(`${year}-06-24T00:00`);
 
 
 /* Elements  */
