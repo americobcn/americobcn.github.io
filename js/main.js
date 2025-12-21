@@ -1,106 +1,130 @@
-/* Global variables */
-let interval_id;
-let re = new RegExp(/^-?\d+(?:\d{0,0})?/);
-const d = new Date();
-let year = d.getFullYear();
-let event_date = new Date(`${year}-06-24T00:00`);
+/* Optimized countdown + weather fetch
+ * Cleaner date handling, no regex parsing
+ * Cached DOM nodes and defensive fetch/error handling
+ */
+(function () {
+  "use strict";
 
-/* Elements  */
-const daysDiv = document.querySelector("#days");
-const hoursDiv = document.querySelector("#hours");
-const minutesDiv = document.querySelector("#minutes");
-const secondsDiv = document.querySelector("#seconds");
+  let intervalId = null;
+  let eventDate = null;
 
-/* Start process */
-document.addEventListener("DOMContentLoaded", () => {
-  event_date =
-    event_date < d ? new Date(`${year + 1}-06-24T00:00`) : new Date(`${year}-06-24T00:00`);
-  console.log(`Today: ${d}`);
-  console.log(`Even Date: ${event_date}`);
+  const daysDiv = document.querySelector("#days");
+  const hoursDiv = document.querySelector("#hours");
+  const minutesDiv = document.querySelector("#minutes");
+  const secondsDiv = document.querySelector("#seconds");
 
-  if (event_date > d) {
-    start_interval(interval_id);
-  } else {
-    update();
-  }
-  get_data();
-});
+  document.addEventListener("DOMContentLoaded", init);
 
-/* Start the interval and register it */
-function start_interval(interval) {
-  console.log("start_interval called");
-  interval_id = setInterval(time_diff, 1000);
-}
-
-function time_diff() {
-  const now = Date.now();
-  if (now > event_date) {
-    console.log("time_diff called");
-    clearInterval(interval_id);
-    update();
-    return;
+  function getEventDate() {
+    const now = new Date();
+    const year = now.getFullYear();
+    // Target: June 24 at 00:00 of this year or next year if passed
+    const candidate = new Date(`${year}-06-24T00:00`);
+    return candidate <= now ? new Date(`${year + 1}-06-24T00:00`) : candidate;
   }
 
-  diff = event_date - now;
-  days = diff / 1000 / 3600 / 24;
-  hours = (diff / 1000 / 3600) % 24;
-  minutes = (diff / 1000 / 60) % 60;
-  seconds = (diff / 1000) % 60;
+  function init() {
+    eventDate = getEventDate();
+    updateCountdown(); // show initial values immediately
 
-  daysDiv.innerHTML = days.toString().match(re)[0];
-  hoursDiv.innerHTML = hours.toString().match(re)[0];
-  minutesDiv.innerHTML = minutes.toString().match(re)[0];
-  secondsDiv.innerHTML = seconds.toString().match(re)[0];
-}
+    if (Date.now() < eventDate.getTime()) {
+      intervalId = setInterval(updateCountdown, 1000);
+    }
 
-/** Count down ended */
-function update() {
-  let couter_element = document.getElementById("counter");
-  while (couter_element.firstChild) {
-    couter_element.removeChild(couter_element.firstChild);
+    get_data();
   }
 
-  couter_element.classList.add("congrats");
-  couter_element.classList.add("flip-scale-up-hor");
-  const congrats = document.createElement("div");
-  const text_node = document.createTextNode("Bon Sant Joan!");
-  couter_element.appendChild(congrats);
-}
+  function updateCountdown() {
+    const now = Date.now();
+    const target = eventDate.getTime();
 
-/* Clima Information */
-const url =
-  "https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/08019/?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbWVyaWNvLmNvdEBnbWFpbC5jb20iLCJqdGkiOiJmOWEwMGY3MC0yZTQ5LTQwNmYtYjViOC00MDkzNTY1NzdjNzQiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY3OTg1ODMyOCwidXNlcklkIjoiZjlhMDBmNzAtMmU0OS00MDZmLWI1YjgtNDA5MzU2NTc3Yzc0Iiwicm9sZSI6IiJ9.4it22Cc2Iu-yBCKp8rjIeVhGZ6Kmr1NZW4W3Y_adoFs";
+    if (now >= target) {
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+      showFinished();
+      return;
+    }
 
-async function get_data() {
-  const info = await fetch(url).then((response) => response.json());
-  const resp = await fetch(info.datos).then((response) => response.json());
-  const predictions = resp[0].prediccion.dia;
-  const data = resp[0];
+    let remaining = Math.floor((target - now) / 1000); // seconds
+    const days = Math.floor(remaining / 86400);
+    remaining %= 86400;
+    const hours = Math.floor(remaining / 3600);
+    remaining %= 3600;
+    const minutes = Math.floor(remaining / 60);
+    const seconds = remaining % 60;
 
-  const body = document.getElementById("name");
-  body.innerHTML = `<h1>${data.nombre}</h1>`;
-
-  let dates = [];
-  for (let i = 0; i < 3; i++) {
-    dates.push(new Date(predictions[i].fecha));
-    // console.log(dates[i]);
+    daysDiv.textContent = String(days);
+    hoursDiv.textContent = String(hours);
+    minutesDiv.textContent = String(minutes);
+    secondsDiv.textContent = String(seconds);
   }
 
-  const name = document.getElementById("name");
-  name.innerHTML = `<h1>El temps a ${data.nombre}</h1>`;
-
-  let dias = document.getElementsByClassName("col-4 text-center");
-
-  for (let i = 0; i < 3; i++) {
-    console.log(predictions[i]);
-    dias[i].innerHTML = `<h5>${dates[i].toLocaleString("default", {
-      day: "numeric",
-      month: "short",
-    })}</h5>
-        <div>Min:   ${predictions[i].temperatura.minima} &#8451</div>
-        <div>Max:   ${predictions[i].temperatura.maxima} &#8451</div><br>
-        <div>00 a 12hs  ${predictions[i].probPrecipitacion[1].value} %</div>
-        <div>12 a 24hs  ${predictions[i].probPrecipitacion[2].value} %</div><br>
-        <div> ${predictions[i].estadoCielo[0].descripcion}</div>`;
+  function showFinished() {
+    const counter = document.getElementById("counter");
+    if (!counter) return;
+    counter.innerHTML = "";
+    counter.classList.add("congrats", "flip-scale-up-hor");
+    const congrats = document.createElement("div");
+    congrats.textContent = "Bon Sant Joan!";
+    counter.appendChild(congrats);
   }
-}
+
+  /* Clima Information */
+  const url =
+    "https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/08019/?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbWVyaWNvLmNvdEBnbWFpbC5jb20iLCJqdGkiOiJmOWEwMGY3MC0yZTQ5LTQwNmYtYjViOC00MDkzNTY1NzdjNzQiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY3OTg1ODMyOCwidXNlcklkIjoiZjlhMDBmNzAtMmU0OS00MDZmLWI1YjgtNDA5MzU2NTc3Yzc0Iiwicm9sZSI6IiJ9.4it22Cc2Iu-yBCKp8rjIeVhGZ6Kmr1NZW4W3Y_adoFs";
+
+  async function get_data() {
+    try {
+      const infoResp = await fetch(url);
+      if (!infoResp.ok) throw new Error(`Aemet URL error: ${infoResp.status}`);
+      const info = await infoResp.json();
+
+      // info.datos should be a url
+      if (!info || !info.datos)
+        throw new Error("Aemet response missing 'datos' URL");
+
+      const datosResp = await fetch(info.datos);
+      if (!datosResp.ok)
+        throw new Error(`Aemet datos fetch error: ${datosResp.status}`);
+      const resp = await datosResp.json();
+
+      const data = resp && resp[0];
+      const predictions = data?.prediccion?.dia || [];
+
+      const nameEl = document.getElementById("name");
+      if (nameEl && data?.nombre) {
+        nameEl.innerHTML = `<h1>El temps a ${data.nombre}</h1>`;
+      }
+
+      const dias = document.getElementsByClassName("col-4 text-center");
+
+      for (let i = 0; i < 3; i++) {
+        const p = predictions[i];
+        if (!p || !dias[i]) continue;
+        const date = p.fecha ? new Date(p.fecha) : null;
+        const min = p.temperatura?.minima ?? "-";
+        const max = p.temperatura?.maxima ?? "-";
+        // Use defensive access for precipitation and estadoCielo
+        const prob1 = p.probPrecipitacion?.[1]?.value ?? "-";
+        const prob2 = p.probPrecipitacion?.[2]?.value ?? "-";
+        const estado = p.estadoCielo?.[0]?.descripcion ?? "";
+
+        const dateLabel = date
+          ? date.toLocaleString("default", { day: "numeric", month: "short" })
+          : "";
+
+        dias[i].innerHTML = `
+<h5>${dateLabel}</h5>
+<div>Min: ${min} &#8451</div>
+<div>Max: ${max} &#8451</div><br>
+<div>00 a 12hs ${prob1} %</div>
+<div>12 a 24hs ${prob2} %</div><br>
+<div>${estado}</div>`;
+      }
+    } catch (err) {
+      console.error("Error fetching weather data:", err);
+    }
+  }
+})();
