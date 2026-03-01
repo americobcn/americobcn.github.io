@@ -19,8 +19,8 @@
     const now = new Date();
     const year = now.getFullYear();
     // Target: June 24 at 00:00 of this year or next year if passed
-    const candidate = new Date(`${year}-06-24T00:00`);
-    return candidate <= now ? new Date(`${year + 1}-06-24T00:00`) : candidate;
+    const candidate = new Date(`${year}-05-02T14:00`);
+    return candidate <= now ? new Date(`${year + 1}-05-02T14:00`) : candidate;
   }
 
   function init() {
@@ -73,7 +73,7 @@
 
   /* Clima Information */
   const url =
-    "https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/08019/?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbWVyaWNvLmNvdEBnbWFpbC5jb20iLCJqdGkiOiJmOWEwMGY3MC0yZTQ5LTQwNmYtYjViOC00MDkzNTY1NzdjNzQiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY3OTg1ODMyOCwidXNlcklkIjoiZjlhMDBmNzAtMmU0OS00MDZmLWI1YjgtNDA5MzU2NTc3Yzc0Iiwicm9sZSI6IiJ9.4it22Cc2Iu-yBCKp8rjIeVhGZ6Kmr1NZW4W3Y_adoFs";
+    "https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/20052/?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbWVyaWNvLmNvdEBnbWFpbC5jb20iLCJqdGkiOiJmOWEwMGY3MC0yZTQ5LTQwNmYtYjViOC00MDkzNTY1NzdjNzQiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY3OTg1ODMyOCwidXNlcklkIjoiZjlhMDBmNzAtMmU0OS00MDZmLWI1YjgtNDA5MzU2NTc3Yzc0Iiwicm9sZSI6IiJ9.4it22Cc2Iu-yBCKp8rjIeVhGZ6Kmr1NZW4W3Y_adoFs";
 
   async function get_data() {
     try {

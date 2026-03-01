@@ -1,55 +1,54 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ca">
+  <head>
+    <meta charset="utf-8" />
+    <title>San Joan</title>
+    <meta name="description" content="Sant Joan 2023" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <link rel="icon" type="image/x-icon" href="static/media/favicon.ico" />
+    <link
+      href="css/bootstrap-5.2.3-dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <title>San Joan</title>
-  <meta name="description" content="Sant Joan 2023">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv='cache-control' content='no-cache'> 
-  <meta http-equiv='expires' content='0'> 
-  <meta http-equiv='pragma' content='no-cache'>
-  <link rel="icon" type="image/x-icon" href="static/media/favicon.ico">
-  <link href="css/bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css">
-</head>
-
-<body>
-  <header class="text-center mt-3">
-    <h1 class="title">Temps que falta per Sant Joan</h1>
-  </header>
-  <div id="counter">
-    <div id="clock_labels" class="row">
-      <div class="col-2 col-sm"></div>
-      <div class="col-2 text-center">Dies</div>
-      <div class="col-2 text-center">Hores</div>
-      <div class="col-2 text-center">Minuts</div>
-      <div class="col-2 text-center">Segons</div>
-      <div class="col-2"></div>
-    </div>
-    <div id="reloj" class="row">
-      <div class="col-2 col-sm"></div>
+  <body>
+    <header class="text-center mt-3">
+      <h1 class="title">Temps que falta per la Sidreria</h1>
+    </header>
+    <div id="counter">
+      <div id="clock_labels" class="row">
+        <div class="col-2 col-sm"></div>
+        <div class="col-2 text-center">Dies</div>
+        <div class="col-2 text-center">Hores</div>
+        <div class="col-2 text-center">Minuts</div>
+        <div class="col-2 text-center">Segons</div>
+        <div class="col-2"></div>
+      </div>
+      <div id="reloj" class="row">
+        <div class="col-2 col-sm"></div>
         <div class="col-2 col-sm text-center" id="days"></div>
         <div class="col-2 col-sm text-center" id="hours"></div>
         <div class="col-2 col-sm text-center" id="minutes"></div>
         <div class="col-2 col-sm text-center" id="seconds"></div>
         <div class="col-2 col-sm"></div>
-    </div>  
-  </div>
-  
-  <div id="infoclima" class="infoclima">
-    <h4 id="name" class="text-center"></h4>
-    <div class="row justify-content-center">
-      <div class="col-4 text-center" id="dia_0">
-      </div>
-      <div class="col-4 text-center" id="dia_1">
-      </div>
-      <div class="col-4 text-center" id="dia_2">
       </div>
     </div>
-  </div>
 
-  <!-- Scripts -->
-  <script src="js/main.js"></script>
-</body>
+    <div id="infoclima" class="infoclima">
+      <h4 id="name" class="text-center"></h4>
+      <div class="row justify-content-center">
+        <div class="col-4 text-center" id="dia_0"></div>
+        <div class="col-4 text-center" id="dia_1"></div>
+        <div class="col-4 text-center" id="dia_2"></div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+  </body>
 </html>
