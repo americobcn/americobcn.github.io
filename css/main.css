@@ -79,6 +79,25 @@ header {
   }
 }
 
+.infoclima-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.congrats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 120px;
+  color: #e2d668;
+  text-shadow: 1px 1px 3px #fadf73;
+}
+
+.infoclima .col-4 > div {
+  margin-bottom: 0.25rem;
+}
+
 .flip-scale-up-hor {
   -webkit-animation: flip-scale-up-hor 0.5s linear both;
   animation: flip-scale-up-hor 0.5s linear both;
