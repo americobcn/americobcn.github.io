@@ -72,8 +72,8 @@
   }
 
   /* Clima Information */
-  const url =
-    "https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/20052/?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbWVyaWNvLmNvdEBnbWFpbC5jb20iLCJqdGkiOiJmOWEwMGY3MC0yZTQ5LTQwNmYtYjViOC00MDkzNTY1NzdjNzQiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY3OTg1ODMyOCwidXNlcklkIjoiZjlhMDBmNzAtMmU0OS00MDZmLWI1YjgtNDA5MzU2NTc3Yzc0Iiwicm9sZSI6IiJ9.4it22Cc2Iu-yBCKp8rjIeVhGZ6Kmr1NZW4W3Y_adoFs";
+  let API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+  const url = `https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/20052/?api_key=${API_KEY}`;
 
   async function get_data() {
     try {
