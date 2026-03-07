@@ -72,25 +72,13 @@
   }
 
   /* Clima Information */
-  const API_KEY = process.env.API_KEY;
-  const url = `https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/20052/?api_key=${API_KEY}`;
-
   async function get_data() {
     try {
-      const infoResp = await fetch(url);
-      if (!infoResp.ok) throw new Error(`Aemet URL error: ${infoResp.status}`);
-      const info = await infoResp.json();
+      const resp = await fetch('/api/weather');
+      if (!resp.ok) throw new Error(`Weather API error: ${resp.status}`);
+      const json = await resp.json();
 
-      // info.datos should be a url
-      if (!info || !info.datos)
-        throw new Error("Aemet response missing 'datos' URL");
-
-      const datosResp = await fetch(info.datos);
-      if (!datosResp.ok)
-        throw new Error(`Aemet datos fetch error: ${datosResp.status}`);
-      const resp = await datosResp.json();
-
-      const data = resp && resp[0];
+      const data = json && json[0];
       const predictions = data?.prediccion?.dia || [];
 
       const nameEl = document.getElementById("name");
