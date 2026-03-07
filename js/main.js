@@ -72,7 +72,7 @@
   }
 
   /* Clima Information */
-  let API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+  const API_KEY = process.env.API_KEY;
   const url = `https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/20052/?api_key=${API_KEY}`;
 
   async function get_data() {
